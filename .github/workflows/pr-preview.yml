@@ -1,0 +1,21 @@
+name: Pull Request Preview
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying to pull request preview server..."
+      # leave comment on PR with the URL of the preview server
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Deployed the preview server'
+            })
