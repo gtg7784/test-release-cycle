@@ -1,4 +1,4 @@
-name: Deploy to Hotfix
+name: Deploy to Production
 on:
   push:
     branches:
