@@ -26,15 +26,9 @@ jobs:
       - name: Remove release-hotfix branch
         continue-on-error: true
         run: |
-          git pull
-          git branch -D release-hotfix
+          git push origin -delete release-hotfix
 
       - name: Re-create release-hotfix branch
         run: |
           git checkout -b release-hotfix
-
-      - name: Push changes to release-hotfix branch
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release-hotfix
+          git push origin release-hotfix
