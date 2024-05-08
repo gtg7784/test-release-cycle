@@ -26,7 +26,7 @@ jobs:
       - name: Remove release-hotfix branch
         continue-on-error: true
         run: |
-          git push origin -delete release-hotfix
+          git push origin --delete release-hotfix
 
       - name: Re-create release-hotfix branch
         run: |
