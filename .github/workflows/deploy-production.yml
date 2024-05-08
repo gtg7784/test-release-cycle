@@ -1,0 +1,36 @@
+name: Deploy to Production Mock
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Release Tag or branch'
+        required: true
+        default: 'v0.0.1'
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Some deployment steps
+        run: echo "Deploying to firebase staging server..."
+
+      - name: Setup Git
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Re-create release-hotfix branch
+        run: |
+          git branch -D release-hotfix
+          git pull
+          git checkout -b release-hotfix
+
+      - name: Push changes to release-hotfix branch
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: release-hotfix
