@@ -15,10 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
-        with:
-          ref: release-hotfix
-
       - name: Some deployment steps
         run: echo "Deploying to firebase staging server..."
 
@@ -30,11 +26,11 @@ jobs:
       - name: Remove release-hotfix branch
         continue-on-error: true
         run: |
+          git pull
           git branch -D release-hotfix
 
       - name: Re-create release-hotfix branch
         run: |
-          git pull
           git checkout -b release-hotfix
 
       - name: Push changes to release-hotfix branch
